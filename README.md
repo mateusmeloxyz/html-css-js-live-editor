@@ -1,6 +1,6 @@
 # html-css-js-live-editor
 
-Live HTML/CSS/JS code editor with vim keybidings
+Live HTML/CSS/JS code editor with vim keybidings and auto save
 
 ## Live demo
 
