@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js'></script>
+</head>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	#editor {
+		height: 100%;
+		width: 50%;
+		display: inline-block;
+	}
+
+	#iframe {
+		height: 100%;
+		display: inline-block;
+		width: 50%;
+	}
+
+	#container {
+		height: 100%;
+		width: auto;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+</style>
+
+<body onload='ready()'>
+
+	<div id='container'>
+		<div id='editor'>
+		</div>
+
+		<iframe id='iframe' frameBorder="0">
+		</iframe>
+	</div>
+
+	<script>
+		function update() {
+			var idoc = document.getElementById('iframe').contentWindow.document;
+
+			idoc.open();
+			idoc.write(editor.getValue());
+			idoc.close();
+		}
+
+		function setupEditor() {
+			window.editor = ace.edit("editor");
+			editor.setTheme("ace/theme/monokai");
+			editor.setKeyboardHandler("ace/keyboard/vim");
+			editor.getSession().setMode("ace/mode/html");
+
+			// if there's something in localstorage, then set it, otherwise, set default value
+			if(localStorage['myapp1'])
+				editor.setValue(localStorage['myapp1']);
+			else
+				editor.setValue(`<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<body>
+</body>
+
+</html>`, 1); //1 = moves cursor to end
+
+			editor.getSession().on('change', function () {
+				update();
+			});
+
+			editor.focus();
+
+
+			editor.setOptions({
+				fontSize: "16pt",
+				showLineNumbers: true,
+				showGutter: true,
+				vScrollBarAlwaysVisible: true,
+				enableBasicAutocompletion: false, enableLiveAutocompletion: false
+			});
+
+			editor.setShowPrintMargin(false);
+			editor.setBehavioursEnabled(false);
+
+			// Will run this when the page is closed
+			window.onbeforeunload = function() {
+				localStorage['myapp1'] = editor.getValue();
+			}
+		}
+
+		setupEditor();
+		update();
+
+
+	</script>
+</body>
+
+</html>
