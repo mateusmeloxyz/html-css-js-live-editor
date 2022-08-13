@@ -15,6 +15,33 @@
 		overflow: hidden;
 	}
 
+	#switch {
+		position: absolute;
+		display: block;
+		background-color: grey;
+		z-index: 999;
+		bottom: 20px;
+		left: 5px;
+		width: 40px;
+		height: 20px;
+		padding: 2px;
+		border-radius: 20px;
+	}
+
+	#switch:hover {
+		cursor: pointer;
+	}
+
+	#knob-switch{
+		position: relative;
+		display: inline-block;
+		z-index:9999;
+		background-color: white;
+		width: 50%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
 	#editor {
 		height: 100%;
 		width: 50%;
@@ -37,6 +64,9 @@
 
 <body onload='ready()'>
 
+	<div id="switch" onclick="changeKeybidings">
+		<div id="knob-switch"></div>
+	</div>
 	<div id='container'>
 		<div id='editor'>
 		</div>
@@ -96,6 +126,10 @@
 			window.onbeforeunload = function() {
 				localStorage['myapp1'] = editor.getValue();
 			}
+		}
+
+		function changeKeybidings(){
+
 		}
 
 		setupEditor();
